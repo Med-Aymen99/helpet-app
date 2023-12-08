@@ -60,5 +60,5 @@ lerna-debug.log*
 # misc
 #.prettier*
 #.eslintrc.js
-*.js
+#*.js
 package-lock.json
