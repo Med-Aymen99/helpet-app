@@ -16,7 +16,7 @@ spec:
         run: helpet-frontend
     spec:
       containers:
-      - image: medaymen99/online-shopping-microservices:helpet-frontend-app-v2
+      - image: jihen546/helpet-front:latest
         name: helpet-frontend
         #imagePullPolicy: Always
         envFrom:
@@ -46,7 +46,7 @@ spec:
         run: helpet-backend
     spec:
       containers:
-      - image: medaymen99/online-shopping-microservices:helpet-backend-app-v2
+      - image: jihen546/helpet-front:latest
         name: helpet-backend
         envFrom:
         - configMapRef:
