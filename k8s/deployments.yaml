@@ -18,7 +18,7 @@ spec:
       containers:
       - image: jihen546/helpet-front:latest
         name: helpet-frontend
-        #imagePullPolicy: Always
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: helpet-frontend-config
@@ -47,6 +47,7 @@ spec:
     spec:
       containers:
       - image: jihen546/helpet-front:latest
+        imagePullPolicy: Always
         name: helpet-backend
         envFrom:
         - configMapRef:
