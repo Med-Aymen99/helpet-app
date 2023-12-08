@@ -22,7 +22,7 @@ dist
 .vscode
 
 # Config files
-config.js
+#config.js
 
 # testing
 coverage
@@ -32,10 +32,11 @@ build
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+#.env.*
+#.env.local
+#.env.development.local
+#.env.test.local
+#.env.production.local
 
 # Logs
 logs
@@ -57,8 +58,6 @@ lerna-debug.log*
 *.sublime-workspace
 
 # misc
-.DS_Store
-.env.*
 .prettier*
 .eslintrc.js
 *.js
