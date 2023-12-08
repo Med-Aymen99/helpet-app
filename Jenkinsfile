@@ -13,10 +13,10 @@ pipeline {
     }
 
     stages {
-        stage('Checkout React App') {
+        stage('Checkout App') {
             steps {
                 script {
-                    git url: 'https://github.com/jihenedoudech/Helpet-React.git', branch: 'master'
+                    git url: 'https://github.com/Med-Aymen99/helpet-app.git', branch: 'master'
                 }
             }
         }
@@ -32,19 +32,12 @@ pipeline {
 
         stage('Build and Push React Docker Image') {
             steps {
-                script {
+                dir('./helpet-frontend'){
                     sh "docker build -t ${HELPET_FRONT}:${TAG} ."
                     sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                     sh "docker tag ${HELPET_FRONT}:${TAG} ${DOCKERHUB_USERNAME}/${HELPET_FRONT}:${TAG}"
                     sh "docker push ${DOCKERHUB_USERNAME}/${HELPET_FRONT}:${TAG}"
                 }
-            }
-        }
-
-        stage('Checkout Nest.js App') {
-            steps {
-                echo "__pulling from git__"
-                git url: 'https://github.com/jihenedoudech/Helpet-nestJS.git', branch: 'master'
             }
         }
 
@@ -59,11 +52,13 @@ pipeline {
 
         stage('Build and Push Nest.js Docker Image') {
             steps {
-                echo "__building and pushing docker image__"
-                sh "docker build -t ${HELPET_BACK}:${TAG} ."
-                sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                sh "docker tag ${HELPET_BACK}:${TAG} ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
-                sh "docker push ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
+                dir('./helpet-backend'){
+                    echo "__building and pushing docker image__"
+                    sh "docker build -t ${HELPET_BACK}:${TAG} ."
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                    sh "docker tag ${HELPET_BACK}:${TAG} ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
+                }
             }
         }
     }
