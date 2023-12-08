@@ -58,7 +58,7 @@ lerna-debug.log*
 *.sublime-workspace
 
 # misc
-.prettier*
-.eslintrc.js
+#.prettier*
+#.eslintrc.js
 *.js
 package-lock.json
