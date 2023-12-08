@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: helpet-frontend
+  name: helpet-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: helpet-frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: helpet-frontend
+    spec:
+      containers:
+      - image: medaymen99/online-shopping-microservices:helpet-frontend-app-v2
+        name: helpet-frontend
+        #imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: helpet-frontend-config
+        ports:
+        - containerPort: 3000
+        resources: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: helpet-backend
+  name: helpet-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: helpet-backend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: helpet-backend
+    spec:
+      containers:
+      - image: medaymen99/online-shopping-microservices:helpet-backend-app-v2
+        name: helpet-backend
+        envFrom:
+        - configMapRef:
+            name: helpet-backend-config
+        ports:
+        - containerPort: 3001
+        resources: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: frontend
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        run: frontend
+    spec:
+      containers:
+      - image: medaymen99/online-shopping-microservices:frontend-app-v3
+        imagePullPolicy: Always
+        name: frontend
+        ports:
+        - containerPort: 3000
+        resources: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helpet-frontend-service
+spec:
+  type: NodePort
+  selector:
+    run: helpet-frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 32001
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: helpet-backend-service
+spec:
+  type: NodePort
+  selector:
+    run: helpet-backend
+  ports:
+  - protocol: TCP
+    port: 3001
+    targetPort: 3001
+    nodePort: 32002
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: NodePort
+  selector:
+    run: frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 32000
