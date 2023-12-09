@@ -5,13 +5,12 @@ import { PetsModule } from './pets/pets.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import path from 'path';
 
 @Module({
   imports: [PetsModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.production.env',
+      envFilePath: '.env.production',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule], 

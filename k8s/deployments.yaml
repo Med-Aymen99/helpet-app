@@ -46,7 +46,7 @@ spec:
         run: helpet-backend
     spec:
       containers:
-      - image: jihen546/helpet-front:latest
+      - image: jihen546/helpet-back:latest
         imagePullPolicy: Always
         name: helpet-backend
         envFrom:
