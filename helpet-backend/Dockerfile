@@ -2,7 +2,7 @@ FROM node:16-alpine AS build
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
