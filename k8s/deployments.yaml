@@ -1,57 +1,57 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    run: helpet-frontend
-  name: helpet-frontend
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      run: helpet-frontend
-  strategy: {}
-  template:
-    metadata:
-      labels:
-        run: helpet-frontend
-    spec:
-      containers:
-      - image: jihen546/helpet-front:latest
-        name: helpet-frontend
-        imagePullPolicy: Always
-        envFrom:
-        - configMapRef:
-            name: helpet-frontend-config
-        ports:
-        - containerPort: 3000
-        resources: {}
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     run: helpet-frontend
+#   name: helpet-frontend
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       run: helpet-frontend
+#   strategy: {}
+#   template:
+#     metadata:
+#       labels:
+#         run: helpet-frontend
+#     spec:
+#       containers:
+#       - image: jihen546/helpet-front:latest
+#         name: helpet-frontend
+#         imagePullPolicy: Always
+#         envFrom:
+#         - configMapRef:
+#             name: helpet-frontend-config
+#         ports:
+#         - containerPort: 3000
+#         resources: {}
 
----
+# ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    run: helpet-backend
-  name: helpet-backend
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      run: helpet-backend
-  strategy: {}
-  template:
-    metadata:
-      labels:
-        run: helpet-backend
-    spec:
-      containers:
-      - image: jihen546/helpet-back:latest
-        imagePullPolicy: Always
-        name: helpet-backend
-        envFrom:
-        - configMapRef:
-            name: helpet-backend-config
-        ports:
-        - containerPort: 3001
-        resources: {}
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     run: helpet-backend
+#   name: helpet-backend
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       run: helpet-backend
+#   strategy: {}
+#   template:
+#     metadata:
+#       labels:
+#         run: helpet-backend
+#     spec:
+#       containers:
+#       - image: jihen546/helpet-back:latest
+#         imagePullPolicy: Always
+#         name: helpet-backend
+#         envFrom:
+#         - configMapRef:
+#             name: helpet-backend-config
+#         ports:
+#         - containerPort: 3001
+#         resources: {}

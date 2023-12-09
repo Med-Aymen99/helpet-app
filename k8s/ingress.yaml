@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: my-ingress
   namespace: helpet-app
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
@@ -16,4 +14,4 @@ spec:
           service:
             name: helpet-frontend-service
             port:
-              number: 3000
+              number: 80
