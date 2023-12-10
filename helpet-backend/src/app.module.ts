@@ -10,7 +10,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   imports: [PetsModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.production',
+      //ignoreEnvFile: process.env.NODE_ENV === 'production'
+      //envFilePath: '.env.production',
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule], 
