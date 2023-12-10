@@ -28,7 +28,7 @@ export default function HomePetCards(props) {
   // fonctionnalité 1 : affichage des pets
   const getAllPets = async () => {
     try {
-      const response = await api.get("/pets/petListPages/", {params: {page: currentPage}});
+      const response = await api.get("/api/pets/petListPages/", {params: {page: currentPage}});
       dispatch(setPetList(response.data.items))
       setNumberOfPages(response.data.total);
     } catch (err) {

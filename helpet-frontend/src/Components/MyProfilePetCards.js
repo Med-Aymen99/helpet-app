@@ -12,7 +12,7 @@ export default function MyProfilePetCards(props) {
 	const api = useApi();
 	
 	React.useEffect(() => {
-        api.get("/pets/myProfile/")
+        api.get("/api/pets/myProfile/")
         .then((response) => {
             console.log(response)
             setUserPetList(response.data)

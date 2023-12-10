@@ -46,7 +46,8 @@ spec:
         run: helpet-frontend
     spec:
       containers:
-      - image: medaymen99/helpet-front:latest
+      #- image: medaymen99/helpet-front:latest
+      - image: jihen546/helpet-front:latest
         imagePullPolicy: Always
         name: helpet-frontend
         envFrom:
