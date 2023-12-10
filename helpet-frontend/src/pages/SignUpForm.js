@@ -16,7 +16,7 @@ export default function SignUpForm(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await api.post("/user/register", signUpFormData);
+            await api.post("/api/user/register", signUpFormData);
         } catch (error) {
             console.log(error);
         }

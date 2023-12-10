@@ -21,7 +21,7 @@ export default function MyProfilePetCards(props) {
     },[])
 
     const deletePet = (petId) => {
-        api.delete(`pets/delete/${petId}`)
+        api.delete(`/api/pets/delete/${petId}`)
             .then((response) => {
             console.log(`pet of id ${petId} has been deleted`)
             setUserPetList(oldUserPetList => oldUserPetList.filter(pet => pet.id != petId))

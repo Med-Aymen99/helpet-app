@@ -44,7 +44,7 @@ export default function HomePetCards(props) {
       data : newsearchData,
       page : currentPage
     }
-    api.get("/pets/Paginatedfilter", {params: filteredSearchData}).then((response) => {
+    api.get("/api/pets/Paginatedfilter", {params: filteredSearchData}).then((response) => {
         dispatch(setPetList(response.data.items))
         setNumberOfPages(response.data.total)
     })
