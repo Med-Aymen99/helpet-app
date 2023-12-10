@@ -16,7 +16,7 @@ spec:
         run: helpet-backend
     spec:
       containers:
-      - image: jihen546/helpet-back:latest
+      - image: medaymen99/helpet-back:latest
         name: helpet-backend
         envFrom:
         - configMapRef:
@@ -46,7 +46,7 @@ spec:
         run: helpet-frontend
     spec:
       containers:
-      - image: jihen546/helpet-front:latest
+      - image: medaymen99/helpet-front:latest
         imagePullPolicy: Always
         name: helpet-frontend
         envFrom:
