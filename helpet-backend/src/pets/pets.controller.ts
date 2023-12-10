@@ -15,7 +15,7 @@ import { Observable, of } from 'rxjs';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 
-@Controller('pets')
+@Controller('/api/pets')
 export class PetsController {
   constructor(private readonly petsService: PetsService) {}
 

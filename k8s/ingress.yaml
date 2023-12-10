@@ -15,3 +15,11 @@ spec:
             name: helpet-frontend-service
             port:
               number: 3000
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: helpet-backend-service
+            port:
+              number: 3001
+            

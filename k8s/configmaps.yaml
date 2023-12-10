@@ -19,4 +19,4 @@ kind: ConfigMap
 metadata:
   name: helpet-frontend-config
 data:
-  REACT_APP_API_URL: "http://helpet-backend-service:3001"
+  REACT_APP_API_URL: "http://20.231.56.57:80"
