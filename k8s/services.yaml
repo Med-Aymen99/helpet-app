@@ -1,18 +1,18 @@
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: helpet-frontend-service
-# spec:
-#   type: NodePort
-#   selector:
-#     run: helpet-frontend
-#   ports:
-#   - protocol: TCP
-#     port: 3000
-#     targetPort: 3000
-#     nodePort: 32001
+apiVersion: v1
+kind: Service
+metadata:
+  name: helpet-frontend-service
+spec:
+  type: NodePort
+  selector:
+    run: helpet-frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 32001
 
-# ---
+---
 
 apiVersion: v1
 kind: Service

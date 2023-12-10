@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy app files
 COPY . .
 # ==== BUILD =====
-RUN npm in
+RUN npm install
 # Build the app
 RUN npm run build
 # ==== RUN =======
