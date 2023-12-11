@@ -45,6 +45,11 @@ export default function Navbar(props) {
 									About Us
 								</button>
 							</Link>
+							<Link to="/about" className="Link-class">
+								<button className="nav--button">
+									Contact
+								</button>
+							</Link>
 				</div>
 				<div>
 					{!auth.isAuthenticated &&
