@@ -9,7 +9,7 @@ export default function Intro() {
                 src={petsCover}
                 alt=""
             />
-            <h1 className="intro--header ">Adopt pets </h1>
+            <h1 className="intro--header ">Adopt pets from us</h1>
             <p className="intro--text">These adorable pets need a home!</p>
         </section>
     )
