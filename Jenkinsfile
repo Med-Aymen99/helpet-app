@@ -2,16 +2,18 @@ pipeline {
     agent any
 
     environment {
+
         IMAGE_NAME_FRONTEND = "helpet-front"
-        HELPET_BACK = "helpet-back"
+        IMAGE_NAME_BACKEND = "helpet-back"
         DOCKERHUB_USERNAME = "jihen546"
         DOCKERHUB_PASSWORD = "jihene123"
         TAG = "latest"
+
         KUBE_NAMESPACE = 'helpet-app' 
         AZURE_RESOURCE_GROUP = 'devops-project'
-        AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
         AKS_CLUSTER_NAME = 'helpet-cluster'
-
+        
+        AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
         AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
         AZURE_CLIENT_SECRET = 'lu48Q~qgr5uX_ySPNj4vLZzqR7rYp0jMjiEpNb_X'
         AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
@@ -45,10 +47,10 @@ pipeline {
             steps {
                 dir('./helpet-backend'){
                     echo "__building and pushing docker image__"
-                    sh "docker build -t ${HELPET_BACK}:${TAG} ."
+                    sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
                     sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    sh "docker tag ${HELPET_BACK}:${TAG} ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${HELPET_BACK}:${TAG}"
+                    sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
                 }
             }
         }
@@ -65,7 +67,7 @@ pipeline {
             steps {
                 // sh "cd helpet-frontend/ && npm start"
                 // sh "cd helpet-backend/ && npm run start:dev"
-                echo "All tests passed successfully.."
+                echo "All tests passed successfully..."
             }
         }
         
