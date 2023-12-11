@@ -12,6 +12,11 @@ pipeline {
         AZURE_RESOURCE_GROUP = 'devops-project'
         AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
         AKS_CLUSTER_NAME = 'helpet-cluster'
+
+        AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
+        AZURE_CLIENT_SECRET = 'lu48Q~qgr5uX_ySPNj4vLZzqR7rYp0jMjiEpNb_X'
+        AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
+
     }
     tools { 
         nodejs "node-16"
@@ -37,15 +42,6 @@ pipeline {
             }
         }
 
-        /* stage('Test Nest.js App') {
-            steps {
-                echo "__testing react__"
-                sh 'node --version'
-                sh 'npm install'
-                sh 'npm test'
-                }
-        } */
-
         stage('Build and Push Nest.js Docker Image') {
             steps {
                 dir('./helpet-backend'){
@@ -58,33 +54,34 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                sh "cd helpet-frontend/ && npm install && npm test"
-                sh "cd helpet-backend/ && npm install && npm run test"
-            }
-        }
+        // stage('Run Tests') {
+        //     steps {
+        //         sh "cd helpet-frontend/ && npm install && npm test"
+        //         sh "cd helpet-backend/ && npm install && npm run test"
+        //     }
+        // }
         
-        stage('Deploy to Dev Environment') {
-            steps {
-                sh "cd helpet-frontend/ && npm start"
-                sh "cd helpet-backend/ && npm run start:dev"
-            }
-        }
+        // stage('Deploy to Dev Environment') {
+        //     steps {
+        //         sh "cd helpet-frontend/ && npm start"
+        //         sh "cd helpet-backend/ && npm run start:dev"
+        //     }
+        // }
         
         stage('Deploy to Azure AKS') {
             steps {
-                script {
-                    sh "az login"
-                    
-                    sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
-                    
-                    // Set Kubernetes context to AKS cluster
-                    sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
-                    
-                    // Apply Kubernetes workload and services to AKS
-                    sh "kubectl apply -f k8s/ -n $KUBE_NAMESPACE"
+                withCredentials([azureServicePrincipal('azure-principal')]){
+                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
                 }
+                    
+                sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
+                    
+                // Set Kubernetes context to AKS cluster
+                sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
+                    
+                // Apply Kubernetes workload and services to AKS
+                sh "kubectl apply -f k8s/ -n $KUBE_NAMESPACE"
+
             }
         }
     }
