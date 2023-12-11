@@ -7,7 +7,6 @@ pipeline {
         DOCKERHUB_USERNAME = "jihen546"
         DOCKERHUB_PASSWORD = "jihene123"
         TAG = "latest"
-        AZURE_CREDENTIALS = credentials('azure-service-principal')
         KUBE_NAMESPACE = 'helpet-app' 
         AZURE_RESOURCE_GROUP = 'devops-project'
         AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
