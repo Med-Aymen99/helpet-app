@@ -47,7 +47,7 @@ export default function Navbar(props) {
 							</Link>
 							<Link to="/about" className="Link-class">
 								<button className="nav--button">
-									Contact
+									Contact Us
 								</button>
 							</Link>
 				</div>
