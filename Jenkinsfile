@@ -57,7 +57,7 @@ pipeline {
             steps {
                 // sh "cd helpet-frontend/ && npm install && npm test"
                 // sh "cd helpet-backend/ && npm install && npm run test"
-                echo "All tests passed successfully."
+                echo "All tests passed successfully.."
             }
         }
         
@@ -65,7 +65,7 @@ pipeline {
             steps {
                 // sh "cd helpet-frontend/ && npm start"
                 // sh "cd helpet-backend/ && npm run start:dev"
-                echo "All tests passed successfully."
+                echo "All tests passed successfully.."
             }
         }
         
