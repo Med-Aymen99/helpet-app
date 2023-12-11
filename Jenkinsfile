@@ -67,7 +67,7 @@ pipeline {
             steps {
                 // sh "cd helpet-frontend/ && npm start"
                 // sh "cd helpet-backend/ && npm run start:dev"
-                echo "All tests passed successfully..."
+                echo "All tests passed successfully.."
             }
         }
         
