@@ -72,7 +72,7 @@ pipeline {
                 sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
                     
                 // Set Kubernetes context to AKS cluster
-                sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
+                sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing"
                     
                 // Apply Kubernetes workload and services to AKS
                 sh "kubectl apply -f k8s/ -n $KUBE_NAMESPACE"
