@@ -68,9 +68,7 @@ spec:
         - podSelector:
             matchLabels:
               run: helpet-frontend
-      # ports:
-      # - port: 3001
-      #   protocol: TCP
+        - ipBlock:
+            cidr: 40.76.157.175/32  # Azure MySQL database IP address
   policyTypes:
     - Ingress
-
