@@ -1,0 +1,76 @@
+# Deny all traffic by default
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: helpet-app
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+
+---
+
+# Allow incoming traffic to the frontend from anywhere
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-ingress
+  namespace: helpet-app
+spec:
+  podSelector:
+    matchLabels:
+      run: helpet-frontend
+  ingress:
+    - ports:
+        - port: 3000
+          protocol: TCP
+  policyTypes:
+    - Ingress
+
+---
+
+# Allow outgoing traffic from the frontend to the backend 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend-to-backend
+  namespace: helpet-app
+spec:
+  podSelector:
+    matchLabels:
+      run: helpet-frontend
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              run: helpet-backend
+      ports:
+      - port: 3001
+        protocol: TCP
+  policyTypes:
+    - Egress
+
+---
+
+# Deny all incoming traffic to the backend except traffic from the frontend
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-backend-ingress
+  namespace: helpet-app
+spec:
+  podSelector:
+    matchLabels:
+      run: helpet-backend
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              run: helpet-frontend
+      ports:
+      - port: 3001
+        protocol: TCP
+  policyTypes:
+    - Ingress
