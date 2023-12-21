@@ -36,6 +36,7 @@ pipeline {
             steps {
                 dir('./helpet-frontend'){
                     sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
+                    
                     sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                     sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
                     sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
@@ -64,7 +65,7 @@ pipeline {
         
         stage('Deploy to Azure AKS') {
             steps {
-                withCredentials([azureServicePrincipal('azure-principal')]){
+                withCredentials([azureServicePrincipal('AzurePrincipalCredentials')]){
                     sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
                 }
                     
