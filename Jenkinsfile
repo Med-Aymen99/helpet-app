@@ -75,10 +75,10 @@ pipeline {
                 sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing"
                 
                 // Set the namespace "helpet-app" for the current context
-                sh "kubectl config set-context --current --namespace helpet-app"
+                sh "kubectl config set-context --current --namespace $KUBE_NAMESPACE"
 
                 // Apply Kubernetes workload and services to AKS
-                sh "kubectl apply -f k8s/ -n $KUBE_NAMESPACE"
+                sh "kubectl apply -f k8s/"
 
                 // Deploy your application to AKS with the new image
                 sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"

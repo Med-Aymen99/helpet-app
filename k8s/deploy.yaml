@@ -25,7 +25,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3001
-        resources: {}
+        resources:
+          requests:
+            cpu: "100m"
 
 ---
 
@@ -57,4 +59,6 @@ spec:
             name: helpet-frontend-config
         ports:
         - containerPort: 3000
-        resources: {}
+        resources:
+          requests:
+            cpu: "100m"
