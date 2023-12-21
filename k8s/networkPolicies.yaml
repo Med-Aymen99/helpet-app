@@ -31,25 +31,25 @@ spec:
 ---
 
 # Allow outgoing traffic from the frontend to the backend 
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-frontend-to-backend
-  namespace: helpet-app
-spec:
-  podSelector:
-    matchLabels:
-      run: helpet-frontend
-  egress:
-    - to:
-        - podSelector:
-            matchLabels:
-              run: helpet-backend
-      ports:
-      - port: 3001
-        protocol: TCP
-  policyTypes:
-    - Egress
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: allow-frontend-to-backend
+#   namespace: helpet-app
+# spec:
+#   podSelector:
+#     matchLabels:
+#       run: helpet-frontend
+#   egress:
+#     - to:
+#         - podSelector:
+#             matchLabels:
+#               run: helpet-backend
+#       ports:
+#       - port: 3001
+#         protocol: TCP
+#   policyTypes:
+#     - Egress
 
 ---
 
@@ -68,9 +68,9 @@ spec:
         - podSelector:
             matchLabels:
               run: helpet-frontend
-      ports:
-      - port: 3001
-        protocol: TCP
+      # ports:
+      # - port: 3001
+      #   protocol: TCP
   policyTypes:
     - Ingress
 
