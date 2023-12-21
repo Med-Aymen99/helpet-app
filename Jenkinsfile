@@ -74,8 +74,8 @@ pipeline {
                 // Set Kubernetes context to AKS cluster
                 sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME"
                 
-                sh "kubectl get deploy"
                 sh "kubectl config use-context helpet-cluster"
+                sh "kubectl get deploy"
 
                 // Apply Kubernetes workload and services to AKS
                 sh "kubectl apply -f k8s/ -n $KUBE_NAMESPACE"
