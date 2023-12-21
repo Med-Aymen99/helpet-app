@@ -15,7 +15,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-frontend-ingress
+  name: frontend-ingress
   namespace: helpet-app
 spec:
   podSelector:
@@ -57,7 +57,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: deny-backend-ingress
+  name: backend-ingress
   namespace: helpet-app
 spec:
   podSelector:
