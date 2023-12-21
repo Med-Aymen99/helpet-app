@@ -1,14 +1,13 @@
-# Deny all traffic by default
+# Deny incomming traffic by default
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: default-deny
+  name: default-deny-ingress
   namespace: helpet-app
 spec:
   podSelector: {}
   policyTypes:
     - Ingress
-    - Egress
 
 ---
 
@@ -46,9 +45,9 @@ spec:
         - podSelector:
             matchLabels:
               run: helpet-backend
-      # ports:
-      # - port: 3001
-      #   protocol: TCP
+      ports:
+      - port: 3001
+        protocol: TCP
   policyTypes:
     - Egress
 
@@ -69,8 +68,30 @@ spec:
         - podSelector:
             matchLabels:
               run: helpet-frontend
-      # ports:
-      # - port: 3001
-      #   protocol: TCP
+      ports:
+      - port: 3001
+        protocol: TCP
   policyTypes:
     - Ingress
+
+---
+
+# Allow access from the backend to the Azure MySQL
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-db-access
+  namespace: helpet-app
+spec:
+  podSelector:
+    matchLabels:
+      run: helpet-backend
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: <Azure_SQL_DB_IP>/32  # Replace <Azure_SQL_DB_IP> with the actual IP of your Azure SQL Database
+          ports:
+            - protocol: TCP
+              port: 3306
