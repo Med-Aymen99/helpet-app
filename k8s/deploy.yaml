@@ -4,6 +4,7 @@ metadata:
   labels:
     run: helpet-backend
   name: helpet-backend
+  namespace: helpet-app
 spec:
   replicas: 1
   selector:
@@ -34,6 +35,7 @@ metadata:
   labels:
     run: helpet-frontend
   name: helpet-frontend
+  namespace: helpet-app
 spec:
   replicas: 1
   selector:
