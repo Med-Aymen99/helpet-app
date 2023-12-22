@@ -5,10 +5,9 @@ pipeline {
 
         IMAGE_NAME_FRONTEND = "helpet-front"
         IMAGE_NAME_BACKEND = "helpet-back"
-        // DOCKERHUB_USERNAME = "jihen546"
-        // DOCKERHUB_PASSWORD = "jihene123"
-        DOCKERHUB_USERNAME = credentials('dockerhub_id').username
-        DOCKERHUB_PASSWORD = credentials('dockerhub_id').password
+        // DOCKERHUB_USR = "jihen546"
+        // DOCKERHUB_PSW = "jihene123"
+        DOCKERHUB= credentials('dockerhub_id')
         TAG = "latest"
 
         KUBE_NAMESPACE = 'helpet-app' 
@@ -42,9 +41,9 @@ pipeline {
             steps {
                 dir('./helpet-frontend'){
                     sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
-                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                    sh "docker login -u ${DOCKERHUB_USR} -p ${DOCKERHUB_PSW}"
+                    sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
                 }
             }
         }
@@ -54,9 +53,9 @@ pipeline {
                 dir('./helpet-backend'){
                     echo "__building and pushing docker image__"
                     sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
-                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    sh "docker login -u ${DOCKERHUB_USR} -p ${DOCKERHUB_PSW}"
+                    sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
                 }
             }
         }
@@ -83,8 +82,8 @@ pipeline {
                 sh "kubectl apply -f k8s/"
 
                 // Deploy your application to AKS with the new image
-                sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
+                sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
 
             }
         }
