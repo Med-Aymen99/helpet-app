@@ -83,9 +83,10 @@ pipeline {
                 sh "kubectl apply -f k8s/"
 
                 // Deploy your application to AKS with the new image
-                sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
-
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                }
             }
         }
 
