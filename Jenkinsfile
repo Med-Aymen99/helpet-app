@@ -5,25 +5,14 @@ pipeline {
 
         IMAGE_NAME_FRONTEND = "helpet-front"
         IMAGE_NAME_BACKEND = "helpet-back"
-        // DOCKERHUB_USR = "jihen546"
-        // DOCKERHUB_PSW = "jihene123"
         DOCKERHUB= credentials('dockerhub_id')
         TAG = "latest"
 
         KUBE_NAMESPACE = 'helpet-app' 
         AZURE_RESOURCE_GROUP = 'devops-project'
         AKS_CLUSTER_NAME = 'helpet-cluster'
-        
-        //AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
-        // AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
-        // AZURE_CLIENT_SECRET = 'Dgr8Q~~sI0NQsg-Qh1Y.0yq2ydSS-18tNuBBXcGL'
-        // AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
-        AZURE_SUBSCRIPTION_ID = credentials('AzurePrincipalCredentials')
-        AZURE_CLIENT_ID = credentials('AzurePrincipalCredentials')
-        AZURE_CLIENT_SECRET = credentials('AzurePrincipalCredentials')
-        AZURE_TENANT_ID = credentials('AzurePrincipalCredentials')
-
     }
+
     tools { 
         nodejs "node-16"
     }
@@ -69,9 +58,11 @@ pipeline {
         
         stage('Deploy to Azure AKS') {
             steps {
-                sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-                sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
-                    
+                withCredentials([azureServicePrincipal('AzurePrincipalCredentials')]) {
+                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                    sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
+                }
+
                 // Set Kubernetes context to AKS cluster
                 sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing"
                 
