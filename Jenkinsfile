@@ -49,7 +49,7 @@ pipeline {
             steps {
                 dir('./helpet-backend'){
                     echo "__building and pushing docker image__"
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                    withCredentials([usernamePassword('dockerhub_id')]) {
                         sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
                         sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
                         sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
