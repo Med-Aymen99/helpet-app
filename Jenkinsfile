@@ -5,8 +5,8 @@ pipeline {
 
         IMAGE_NAME_FRONTEND = "helpet-front"
         IMAGE_NAME_BACKEND = "helpet-back"
-        DOCKERHUB_USERNAME = "jihen546"
-        DOCKERHUB_PASSWORD = "jihene123"
+        // DOCKERHUB_USERNAME = "jihen546"
+        // DOCKERHUB_PASSWORD = "jihene123"
         TAG = "latest"
 
         KUBE_NAMESPACE = 'helpet-app' 
@@ -35,11 +35,12 @@ pipeline {
         stage('Build and Push React Docker Image') {
             steps {
                 dir('./helpet-frontend'){
-                    sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
-                    
-                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
+                        sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                        sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                        sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                    }
                 }
             }
         }
@@ -48,10 +49,12 @@ pipeline {
             steps {
                 dir('./helpet-backend'){
                     echo "__building and pushing docker image__"
-                    sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
-                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                    sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
+                        sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                        sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                        sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    }
                 }
             }
         }
