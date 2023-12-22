@@ -19,6 +19,10 @@ pipeline {
         // AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
         // AZURE_CLIENT_SECRET = 'Dgr8Q~~sI0NQsg-Qh1Y.0yq2ydSS-18tNuBBXcGL'
         // AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
+        AZURE_SUBSCRIPTION_ID = credentials('AzurePrincipalCredentials')
+        AZURE_CLIENT_ID = credentials('AzurePrincipalCredentials')
+        AZURE_CLIENT_SECRET = credentials('AzurePrincipalCredentials')
+        AZURE_TENANT_ID = credentials('AzurePrincipalCredentials')
 
     }
     tools { 
@@ -37,12 +41,10 @@ pipeline {
         stage('Build and Push React Docker Image') {
             steps {
                 dir('./helpet-frontend'){
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                        sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
-                        sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                        sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
-                        sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
-                    }
+                    sh "docker build -t ${IMAGE_NAME_FRONTEND}:${TAG} ."
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                    sh "docker tag ${IMAGE_NAME_FRONTEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_FRONTEND}:${TAG}"
                 }
             }
         }
@@ -51,12 +53,10 @@ pipeline {
             steps {
                 dir('./helpet-backend'){
                     echo "__building and pushing docker image__"
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub_id', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
-                        sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
-                        sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
-                        sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                        sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
-                    }
+                    sh "docker build -t ${IMAGE_NAME_BACKEND}:${TAG} ."
+                    sh "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+                    sh "docker tag ${IMAGE_NAME_BACKEND}:${TAG} ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
+                    sh "docker push ${DOCKERHUB_USERNAME}/${IMAGE_NAME_BACKEND}:${TAG}"
                 }
             }
         }
@@ -70,10 +70,8 @@ pipeline {
         
         stage('Deploy to Azure AKS') {
             steps {
-                withCredentials([azureServicePrincipal('AzurePrincipalCredentials')]){
-                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-                    sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
-                }
+                sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
                     
                 // Set Kubernetes context to AKS cluster
                 sh "az aks get-credentials --resource-group $AZURE_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing"
