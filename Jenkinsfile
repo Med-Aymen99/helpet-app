@@ -7,8 +7,9 @@ pipeline {
         IMAGE_NAME_BACKEND = "helpet-back"
         // DOCKERHUB_USERNAME = "jihen546"
         // DOCKERHUB_PASSWORD = "jihene123"
-        DOCKERHUB_USERNAME = credentials('dockerhub_id')
-        DOCKERHUB_PASSWORD = credentials('dockerhub_id')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub_id')
+        DOCKERHUB_USERNAME = DOCKERHUB_CREDENTIALS.username
+        DOCKERHUB_PASSWORD = DOCKERHUB_CREDENTIALS.password
         TAG = "latest"
 
         KUBE_NAMESPACE = 'helpet-app' 
