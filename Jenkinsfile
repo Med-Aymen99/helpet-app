@@ -14,9 +14,9 @@ pipeline {
         AKS_CLUSTER_NAME = 'helpet-cluster'
         
         AZURE_SUBSCRIPTION_ID = 'bcfd15fd-cfda-4dab-b575-b826ed03175d'
-        AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
-        AZURE_CLIENT_SECRET = 'Dgr8Q~~sI0NQsg-Qh1Y.0yq2ydSS-18tNuBBXcGL'
-        AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
+        // AZURE_CLIENT_ID = 'df504505-a6fc-4868-abea-c7f83485e20c'
+        // AZURE_CLIENT_SECRET = 'Dgr8Q~~sI0NQsg-Qh1Y.0yq2ydSS-18tNuBBXcGL'
+        // AZURE_TENANT_ID = 'dbd6664d-4eb9-46eb-99d8-5c43ba153c61'
 
     }
     tools { 
