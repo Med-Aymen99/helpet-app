@@ -1,34 +1,34 @@
 # Deny incomming traffic by default
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: default-deny-ingress
-  namespace: helpet-app
-spec:
-  podSelector: {}
-  policyTypes:
-    - Ingress
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: default-deny-ingress
+#   namespace: helpet-app
+# spec:
+#   podSelector: {}
+#   policyTypes:
+#     - Ingress
 
----
+# ---
 
 # Allow incoming traffic to the frontend from anywhere
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: frontend-ingress
-  namespace: helpet-app
-spec:
-  podSelector:
-    matchLabels:
-      run: helpet-frontend
-  ingress:
-    - ports:
-        - port: 3000
-          protocol: TCP
-  policyTypes:
-    - Ingress
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: frontend-ingress
+#   namespace: helpet-app
+# spec:
+#   podSelector:
+#     matchLabels:
+#       run: helpet-frontend
+#   ingress:
+#     - ports:
+#         - port: 3000
+#           protocol: TCP
+#   policyTypes:
+#     - Ingress
 
----
+# ---
 
 # Allow outgoing traffic from the frontend to the backend 
 # apiVersion: networking.k8s.io/v1
@@ -51,24 +51,25 @@ spec:
 #   policyTypes:
 #     - Egress
 
----
+#---
 
+#### Doesn't work / problem database
 # Deny all incoming traffic to the backend except traffic from the frontend
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: backend-ingress
-  namespace: helpet-app
-spec:
-  podSelector:
-    matchLabels:
-      run: helpet-backend
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              run: helpet-frontend
-        - ipBlock:
-            cidr: 40.76.157.175/32  # Azure MySQL database IP address
-  policyTypes:
-    - Ingress
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: backend-ingress
+#   namespace: helpet-app
+# spec:
+#   podSelector:
+#     matchLabels:
+#       run: helpet-backend
+#   ingress:
+#     - from:
+#         - podSelector:
+#             matchLabels:
+#               run: helpet-frontend
+#         - ipBlock:
+#             cidr: 40.76.157.175/32  # Azure MySQL database IP address
+#   policyTypes:
+#     - Ingress
