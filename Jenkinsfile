@@ -7,6 +7,7 @@ pipeline {
         IMAGE_NAME_BACKEND = "helpet-back"
         DOCKERHUB= credentials('dockerhub_id')
         TAG = "latest"
+        
         KUBE_NAMESPACE = 'helpet-app' 
         AZURE_RESOURCE_GROUP = 'devops-project'
         AKS_CLUSTER_NAME = 'helpet-cluster'
