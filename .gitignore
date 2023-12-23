@@ -22,7 +22,7 @@ dist
 .vscode
 
 # Config files
-#config.js
+config
 
 # testing
 coverage

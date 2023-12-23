@@ -20,6 +20,8 @@ spec:
       - image: jihen546/helpet-back:latest
         name: helpet-backend
         envFrom:
+        - secretRef:
+            name: helpet-backend-secret
         - configMapRef:
             name: helpet-backend-config
         imagePullPolicy: Always
@@ -51,7 +53,6 @@ spec:
     spec:
       containers:
       - image: jihen546/helpet-front:latest
-      #- image: jihen546/helpet-front:latest
         imagePullPolicy: Always
         name: helpet-frontend
         envFrom:
