@@ -72,7 +72,7 @@ pipeline {
                 // Apply Kubernetes workload and services to AKS
                 sh "kubectl apply -f k8s/"
 
-                // Deploy your application to AKS with the new image
+                // Deploy the application to AKS with the new image
                 sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
                 sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
 
