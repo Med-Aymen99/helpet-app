@@ -76,8 +76,8 @@ pipeline {
                 sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
                 sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
 
-                sh "kubectl rollout restart deployment deployment/helpet-frontend"
-                sh "kubectl rollout restart deployment deployment/helpet-backend"
+                sh "kubectl rollout restart deployment helpet-frontend"
+                sh "kubectl rollout restart deployment helpet-backend"
 
             }
         }
