@@ -69,8 +69,6 @@ pipeline {
                 // Set the namespace "helpet-app" for the current context
                 sh "kubectl config set-context --current --namespace $KUBE_NAMESPACE"
 
-                sh "sed -i 's#your-old-image:tag#${env.IMAGE_NAME}#g' /K8s/*.yaml"
-
                 // Apply Kubernetes workload and services to AKS
                 sh "kubectl apply -f k8s/"
 
