@@ -69,12 +69,17 @@ pipeline {
                 // Set the namespace "helpet-app" for the current context
                 sh "kubectl config set-context --current --namespace $KUBE_NAMESPACE"
 
+                sh "sed -i 's#your-old-image:tag#${env.IMAGE_NAME}#g' /K8s/*.yaml"
+
                 // Apply Kubernetes workload and services to AKS
                 sh "kubectl apply -f k8s/"
 
                 // Deploy the application to AKS with the new image
                 sh "kubectl set image deployment/helpet-backend helpet-backend=${DOCKERHUB_USR}/${IMAGE_NAME_BACKEND}:${TAG}"
                 sh "kubectl set image deployment/helpet-frontend helpet-frontend=${DOCKERHUB_USR}/${IMAGE_NAME_FRONTEND}:${TAG}"
+
+                sh "kubectl rollout restart deployment deployment/helpet-frontend"
+                sh "kubectl rollout restart deployment deployment/helpet-backend"
 
             }
         }
