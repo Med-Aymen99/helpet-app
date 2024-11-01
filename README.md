@@ -32,8 +32,8 @@ cd helpet-frontend && npm start
 
 ## Technologies Used
 
-![NestJS](https://nestjs.com/img/logo_text.svg) 
-![ReactJS](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+<img src="https://nestjs.com/img/logo_text.svg" alt="NestJS" width="50" height="50"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="ReactJS" width="50" height="50"/>
 
 
 ## Screenshots
