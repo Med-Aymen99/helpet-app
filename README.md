@@ -1,6 +1,3 @@
-## Helpet Website
-[Absence-manager-by-aymen](https://absence-manager-by-aymen.azurewebsites.net/)
-
 ## Helpet
 The HELPET App is a platform designed to connect pet owners with individuals interested in pet adoption or pet sitting. The app enables pet owners to list their pets for adoption or find reliable sitters, while also offering a space for animal lovers to discover pets they can adopt or care for. By facilitating these connections, HELPET aims to support pet welfare and foster a community of responsible pet caregivers.
 
